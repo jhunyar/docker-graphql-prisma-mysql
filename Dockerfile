@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN npm install -g graphql-cli prisma nodemon
 
-COPY package*.json /app
+COPY package.json *yarn* ./
 
 RUN npm install
 
