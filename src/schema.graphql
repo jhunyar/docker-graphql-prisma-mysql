@@ -2,13 +2,16 @@
 
 type Query {
   users(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
-  me: User!
+  user: User!
   posts(query: String): [Post!]!
   comments(query: String): [Comment!]!
 }
 
 type Mutation {
   createUser(data: CreateUserInput!): AuthPayload!
+  createPost(data: CreatePostInput!): Post!
+  updatePost(data: UpdatePostInput!, id: ID!): Post!
+  deletePost(id: ID!): Post!
 }
 
 type AuthPayload {
@@ -22,33 +25,12 @@ input CreateUserInput {
   password: String!
 }
 
-type User {
-  id: ID!
-  email: String!
-  name: String
-  posts: [Post!]!
-  comments: [Comment!]!
-}
-
-type Post {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
+input CreatePostInput {
   title: String!
-  content: String
+  content: String!
+  author: ID!
+}
+
+input UpdatePostInput {
   published: Boolean!
-  author: User!
-  comments: [Comment!]!
-}
-
-type Comment {
-  id: ID!
-  text: String!
-  writtenBy: User!
-}
-
-enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
 }

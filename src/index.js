@@ -13,7 +13,7 @@ const resolvers = {
             ],
           },
         },
-        info
+        info,
       )
     },
     user: (_, args, { prisma }, info) => {
@@ -23,12 +23,12 @@ const resolvers = {
             id: args.id,
           },
         },
-        info
+        info,
       )
     }
   },
   Mutation: {
-    createDraft: (_, args, { prisma }, info) => {
+    createPost: (_, args, { prisma }, info) => {
       return prisma.mutation.createPost(
         {
           data: {
@@ -41,10 +41,10 @@ const resolvers = {
             },
           },
         },
-        info
+        info,
       )
     },
-    publish: (_, args, { prisma }, info) => {
+    updatePost: (_, args, { prisma }, info) => {
       return prisma.mutation.updatePost(
         {
           where: {
@@ -54,7 +54,7 @@ const resolvers = {
             published: true,
           },
         },
-        info
+        info,
       )
     },
     deletePost: (_, args, { prisma }, info) => {
@@ -64,14 +64,16 @@ const resolvers = {
             id: args.id,
           },
         },
-        info
+        info,
       )
     },
-    signup: (_, args, { prisma }, info) => {
+    createUser: (_, args, { prisma }, info) => {
       return prisma.mutation.createUser(
         {
           data: {
             name: args.name,
+            email: args.email,
+            password: args.password
           },
         },
         info
