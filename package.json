@@ -7,7 +7,9 @@
     "prisma-binding": "^2.3.15"
   },
   "scripts": {
-    "start": "docker-compose up"
+    "setup": "docker volume create nodemodules",
+    "install": "docker-compose -f docker-compose.builder.yml run --rm install",
+    "dev": "docker-compose up"
   },
   "description": "POC for graphl server, prisma and database in a docker container",
   "version": "1.0.0",

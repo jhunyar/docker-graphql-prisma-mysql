@@ -1,10 +1,22 @@
 version: '3'
 services:
+  dev:
+    image: node:12
+    volumes:
+      - nodemodules:/usr/src/service/node_modules
+      - .:/usr/src/service
+    environment:
+      - NODE_ENV=development
+    working_dir: /usr/src/service
+    command: npm run dev
+    ports:
+      - "4000:4000"
   server:
-    build: ./
+    entrypoint: ./docker-scripts/entrypoint.sh
     image: graphql-server
     depends_on:
       - prisma
+      - dev
     ports:
       - "4000:4000"
   prisma:
@@ -32,6 +44,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql 
+
 volumes:
+  nodemodules:
+    external: true
   mysql:
