@@ -1,16 +1,16 @@
 version: '3'
 services:
-  dev:
-    image: node:12
-    volumes:
-      - nodemodules:/usr/src/service/node_modules
-      - .:/usr/src/service
-    environment:
-      - NODE_ENV=development
-    working_dir: /usr/src/service
-    command: npm run dev
-    ports:
-      - "3000:3000"
+  # dev:
+  #   image: node:12
+  #   volumes:
+  #     - nodemodules:/usr/src/service/node_modules
+  #     - .:/usr/src/service
+  #   environment:
+  #     - NODE_ENV=development
+  #   working_dir: /usr/src/service
+  #   command: npm run dev
+  #   ports:
+  #     - "3000:3000"
   server:
     entrypoint: ./docker-scripts/entrypoint.sh
     build: .
@@ -18,7 +18,7 @@ services:
       - ./usr/src/service
     depends_on:
       - prisma
-      - dev
+      # - dev
     ports:
       - "4000:4000"
   prisma:

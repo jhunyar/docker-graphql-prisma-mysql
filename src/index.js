@@ -3,8 +3,8 @@ const { Prisma } = require('prisma-binding')
 
 const resolvers = {
   Query: {
-    posts: (_, args, context, info) => {
-      return context.prisma.query.posts(
+    posts: (_, args, { prisma }, info) => {
+      return prisma.query.posts(
         {
           where: {
             OR: [
@@ -13,23 +13,23 @@ const resolvers = {
             ],
           },
         },
-        info,
+        info
       )
     },
-    user: (_, args, context, info) => {
-      return context.prisma.query.user(
+    user: (_, args, { prisma }, info) => {
+      return prisma.query.user(
         {
           where: {
             id: args.id,
           },
         },
-        info,
+        info
       )
     }
   },
   Mutation: {
-    createDraft: (_, args, context, info) => {
-      return context.prisma.mutation.createPost(
+    createDraft: (_, args, { prisma }, info) => {
+      return prisma.mutation.createPost(
         {
           data: {
             title: args.title,
@@ -41,11 +41,11 @@ const resolvers = {
             },
           },
         },
-        info,
+        info
       )
     },
-    publish: (_, args, context, info) => {
-      return context.prisma.mutation.updatePost(
+    publish: (_, args, { prisma }, info) => {
+      return prisma.mutation.updatePost(
         {
           where: {
             id: args.id,
@@ -54,27 +54,27 @@ const resolvers = {
             published: true,
           },
         },
-        info,
+        info
       )
     },
-    deletePost: (_, args, context, info) => {
-      return context.prisma.mutation.deletePost(
+    deletePost: (_, args, { prisma }, info) => {
+      return prisma.mutation.deletePost(
         {
           where: {
             id: args.id,
           },
         },
-        info,
+        info
       )
     },
-    signup: (_, args, context, info) => {
-      return context.prisma.mutation.createUser(
+    signup: (_, args, { prisma }, info) => {
+      return prisma.mutation.createUser(
         {
           data: {
             name: args.name,
           },
         },
-        info,
+        info
       )
     },
   },

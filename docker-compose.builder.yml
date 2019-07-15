@@ -14,7 +14,7 @@ services:
   install:
     extends:
       service: base
-    command: npm install -g graphql-cli prisma nodemon 
+    command: npm install -g graphql-cli prisma nodemon
     command: npm i
 
   build:
