@@ -10,7 +10,7 @@ services:
     working_dir: /usr/src/service
     command: npm run dev
     ports:
-      - "4000:4000"
+      - "3000:3000"
   server:
     entrypoint: ./docker-scripts/entrypoint.sh
     image: graphql-server
