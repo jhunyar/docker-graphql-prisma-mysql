@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
   # dev:
   #   image: node:12
@@ -13,9 +13,11 @@ services:
   #     - "3000:3000"
   server:
     entrypoint: ./docker-scripts/entrypoint.sh
-    build: .
+    build:
+      context: .
     volumes:
-      - ./usr/src/service
+      - ./app
+      - ./package.json:/app/package.json
     depends_on:
       - prisma
       # - dev
@@ -40,6 +42,8 @@ services:
             rawAccess: true
             port: 3306
             migrations: true
+    depends_on:
+      - mysql
   mysql:
     image: mysql:5.7
     restart: always
@@ -49,6 +53,4 @@ services:
       - mysql:/var/lib/mysql 
 
 volumes:
-  nodemodules:
-    external: true
   mysql:
