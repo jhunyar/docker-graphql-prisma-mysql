@@ -1,4 +1,4 @@
-#
+
 # ---- Base Node ----
 FROM node:12
 # set working directory
@@ -8,13 +8,11 @@ RUN npm install -g graphql-cli prisma nodemon
 # copy project file
 COPY package.json ./
  
-#
 # ---- Dependencies ----
 # FROM base AS dependencies
 # install ALL node_modules, including 'devDependencies'
 RUN npm install
  
-#
 # ---- Dev ----
 # FROM base AS dev
 # copy app sources

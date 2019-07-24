@@ -3,8 +3,8 @@ const { Prisma } = require('prisma-binding')
 
 const resolvers = {
   Query: {
-    posts: (_, args, { prisma }, info) => {
-      return prisma.query.posts(
+    posts: (_, args, context, info) => {
+      return context.prisma.query.posts(
         {
           where: {
             OR: [
@@ -16,8 +16,8 @@ const resolvers = {
         info,
       )
     },
-    user: (_, args, { prisma }, info) => {
-      return prisma.query.user(
+    user: (_, args, context, info) => {
+      return context.prisma.query.user(
         {
           where: {
             id: args.id,
@@ -25,11 +25,22 @@ const resolvers = {
         },
         info,
       )
-    }
+    },
+    users: (_, args, { prisma }, info) => { 
+      if (args.query) {
+        opArgs.where = {
+          OR: [{
+            name_contains: args.query
+          }]
+          
+        }
+      }
+      return prisma.query.users(info)
+    },
   },
   Mutation: {
-    createPost: (_, args, { prisma }, info) => {
-      return prisma.mutation.createPost(
+    createDraft: (_, args, context, info) => {
+      return context.prisma.mutation.createPost(
         {
           data: {
             title: args.title,
@@ -44,8 +55,8 @@ const resolvers = {
         info,
       )
     },
-    updatePost: (_, args, { prisma }, info) => {
-      return prisma.mutation.updatePost(
+    publish: (_, args, context, info) => {
+      return context.prisma.mutation.updatePost(
         {
           where: {
             id: args.id,
@@ -57,8 +68,8 @@ const resolvers = {
         info,
       )
     },
-    deletePost: (_, args, { prisma }, info) => {
-      return prisma.mutation.deletePost(
+    deletePost: (_, args, context, info) => {
+      return context.prisma.mutation.deletePost(
         {
           where: {
             id: args.id,
@@ -67,16 +78,14 @@ const resolvers = {
         info,
       )
     },
-    createUser: (_, args, { prisma }, info) => {
-      return prisma.mutation.createUser(
+    signup: (_, args, context, info) => {
+      return context.prisma.mutation.createUser(
         {
           data: {
             name: args.name,
-            email: args.email,
-            password: args.password
           },
         },
-        info
+        info,
       )
     },
   },
@@ -93,4 +102,4 @@ const server = new GraphQLServer({
     }),
   }),
 })
-server.start({ cors: { origin: ['http://localhost:4000'], credentials: true }, port: 4000 }, () => console.log(`GraphQL server is running on http://localhost:4000`))
+server.start(() => console.log(`GraphQL server is running on http://localhost:4000`))

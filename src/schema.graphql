@@ -1,34 +1,17 @@
+# import Post from './generated/prisma.graphql'
+# import User from './generated/prisma.graphql'
 # import UserOrderByInput from './generated/prisma.graphql'
 
+
 type Query {
+  posts(searchString: String): [Post!]!
+  user(id: ID!): User
   users(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
-  user: User!
-  posts(query: String): [Post!]!
-  comments(query: String): [Comment!]!
 }
 
 type Mutation {
-  createUser(data: CreateUserInput!): AuthPayload!
-  createPost(data: CreatePostInput!): Post!
-  updatePost(data: UpdatePostInput!, id: ID!): Post!
-  deletePost(id: ID!): Post!
-}
-
-type AuthPayload {
-  success: Boolean
-}
-
-input CreateUserInput {
-  name: String!
-  email: String!
-}
-
-input CreatePostInput {
-  title: String!
-  content: String!
-  author: ID!
-}
-
-input UpdatePostInput {
-  published: Boolean!
+  createDraft(authorId: ID!, title: String!, content: String!): Post
+  publish(id: ID!): Post
+  deletePost(id: ID!): Post
+  signup(name: String!): User!
 }
