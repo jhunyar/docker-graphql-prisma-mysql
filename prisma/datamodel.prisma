@@ -1,9 +1,7 @@
 type User {
   id: ID! @id
-  email: String! @unique
   name: String
   posts: [Post!]!
-  comments: [Comment!]!
 }
 
 type Post {
@@ -14,11 +12,4 @@ type Post {
   content: String
   published: Boolean! @default(value: false)
   author: User!
-  comments: [Comment!]!
-}
-
-type Comment {
-  id: ID! @id
-  text: String!
-  writtenBy: User!
 }

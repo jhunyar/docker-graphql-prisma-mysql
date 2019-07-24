@@ -25,7 +25,18 @@ const resolvers = {
         },
         info,
       )
-    }
+    },
+    users: (_, args, { prisma }, info) => { 
+      if (args.query) {
+        opArgs.where = {
+          OR: [{
+            name_contains: args.query
+          }]
+          
+        }
+      }
+      return prisma.query.users(info)
+    },
   },
   Mutation: {
     createDraft: (_, args, context, info) => {
@@ -91,4 +102,4 @@ const server = new GraphQLServer({
     }),
   }),
 })
-server.start({ cors: { origin: ['http://localhost:4000'], credentials: true }, port: 4000 }, () => console.log(`GraphQL server is running on http://localhost:4000`))
+server.start(() => console.log(`GraphQL server is running on http://localhost:4000`))
